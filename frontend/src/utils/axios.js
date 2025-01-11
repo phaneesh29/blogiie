@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-    baseURL: 'https://blogie-s8n6.onrender.com', // Replace with your API's base URL
+    baseURL: 'http://localhost:8080', 
 });
 
 // Add a request interceptor to attach the token

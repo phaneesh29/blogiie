@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import { authUser } from "../middlewares/user.middleware.js";
-import { addBlog, deleteBlog, editBlog, getAllBlog, getBlogById, searchBlog } from "../controllers/blog.controller.js";
+import { addBlog, blogByUser, deleteBlog, editBlog, getAllBlog, getBlogById, searchBlog } from "../controllers/blog.controller.js";
 
 const blogRouter = Router()
 
@@ -21,6 +21,8 @@ blogRouter.post("/edit", authUser, [
 
 blogRouter.post("/delete", authUser, deleteBlog)
 blogRouter.post("/search", searchBlog)
+
+blogRouter.get("/user/:un",blogByUser)
 
 
 

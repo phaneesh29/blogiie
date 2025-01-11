@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { errorToast, sucessToast } from '../utils/noti'
 import axiosInstance from '../utils/axios'
 import { TiTick } from 'react-icons/ti'
 import { MdSyncLock } from 'react-icons/md'
 
 const Profile = () => {
+    const navigate = useNavigate()
+
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -18,6 +20,7 @@ const Profile = () => {
             setLoading(false)
         } catch (error) {
             errorToast(error.response.data.error)
+            navigate("/home")
         }
     }
 

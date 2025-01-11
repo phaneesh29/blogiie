@@ -3,6 +3,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser";
 import { userRouter } from "./routes/user.route.js";
 import { blogRouter } from "./routes/blog.route.js";
+import { commentrouter } from "./routes/comment.route.js";
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(cookieParser())
 
 app.use("/users",userRouter)
 app.use("/blogs",blogRouter)
+app.use("/comments",commentrouter)
 
 app.get("/status",(req,res)=>{
     res.status(200).json({

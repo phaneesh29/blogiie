@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { errorToast, sucessToast } from '../utils/noti';
-import { MdDelete } from 'react-icons/md';
+import { MdClose, MdDelete } from 'react-icons/md';
 import axiosInstance from '../utils/axios';
 
 const AddBlog = () => {
@@ -17,13 +17,7 @@ const AddBlog = () => {
     const [tagInput, setTagInput] = useState('');
     const [tagArray, setTagArray] = useState([])
 
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        if (!user) {
-            navigate("/home")
-        }
-    }, [user])
+    const [loading, setLoading] = useState(true)
 
     const modules = {
         toolbar: [
@@ -90,8 +84,28 @@ const AddBlog = () => {
 
     }
 
+    useEffect(() => {
+        console.log(user)
+        if (!user) {
+            navigate("/home")
+            return
+        }
+        setLoading(false)
+    }, [user])
+
+    if (loading) {
+        return (
+            <div className='h-screen flex justify-center items-center'>
+                <div className='w-24 h-24 rounded-full m-auto mt-30 animate-spin border-e-2 border-l-2 border-emerald-500 border-l-orange-500'>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <>
+            <Link to={"/home"} className='inline-block p-2'><MdClose size={29}/></Link>
+
             <div className='p-3 flex justify-between items-center mb-10'>
                 <div className='text-2xl font-semibold'>Add Blog</div>
                 <div className=' text-xl'>Hello, <span className='font-bold'>{user.username}</span></div>

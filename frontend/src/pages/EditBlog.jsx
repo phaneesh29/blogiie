@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { errorToast, sucessToast } from '../utils/noti'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { MdDelete } from 'react-icons/md';
+import { MdClose, MdDelete } from 'react-icons/md';
 import axiosInstance from '../utils/axios';
 
 const EditBlog = () => {
@@ -11,19 +11,21 @@ const EditBlog = () => {
     const location = useLocation()
 
     const payload = location.state
-
-    const [image, setImage] = useState(payload.blog.image || '');
-    const [title, setTitle] = useState(payload.blog.title || '');
-    const [description, setDescription] = useState(payload.blog.description || '');
+    
+    const [image, setImage] = useState(payload?.blog?.image || '');
+    const [title, setTitle] = useState(payload?.blog?.title || '');
+    const [description, setDescription] = useState(payload?.blog?.description || '');
     const [tagInput, setTagInput] = useState('');
-    const [tagArray, setTagArray] = useState(payload.blog.tags || [])
+    const [tagArray, setTagArray] = useState(payload?.blog?.tags || [])
 
-    const [loading, setLoading] = useState(false)
-
+    const [loading, setLoading] = useState(true)
+    
     useEffect(() => {
         if (!payload) {
             navigate("/home")
+            return
         }
+        setLoading(false)
     }, [payload])
 
     const modules = {
@@ -88,7 +90,7 @@ const EditBlog = () => {
             navigate("/home")
 
         } catch (error) {
-            
+
             errorToast(error.response.statusText || error.response.data.error || error.response.data.errors[0].msg || "Something unexpected")
         } finally {
             setLoading(false)
@@ -96,9 +98,19 @@ const EditBlog = () => {
 
     }
 
+    if (loading) {
+        return (
+            <div className='h-screen flex justify-center items-center'>
+                <div className='w-24 h-24 rounded-full m-auto mt-30 animate-spin border-e-2 border-l-2 border-emerald-500 border-l-orange-500'>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <>
+            <Link to={"/home"} className='inline-block p-2'><MdClose size={29}/></Link>
+    
             <div className='p-3 flex justify-between items-center mb-10'>
                 <div className='text-2xl font-semibold'>Edit Blog</div>
                 <div className=' text-xl'>Hello, <span className='font-bold'>{payload.user.username}</span></div>

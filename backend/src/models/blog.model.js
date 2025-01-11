@@ -36,8 +36,7 @@ const blogSchema = new Schema({
     tags: {
         type: [String],
         default: [],
-    },
-    comments: [commentSchema]
+    }
 }, { timestamps: true })
 const BlogModel = mongoose.model('Blog', blogSchema);
 export default BlogModel;

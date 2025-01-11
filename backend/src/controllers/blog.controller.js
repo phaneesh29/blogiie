@@ -1,5 +1,6 @@
 import { validationResult } from "express-validator";
 import BlogModel from "../models/blog.model.js";
+import { UserModel } from "../models/user.model.js";
 
 export const addBlog = async (req, res) => {
     try {
@@ -151,5 +152,25 @@ export const searchBlog = async (req, res) => {
         res.status(200).json({ query, searchedBlogs: searchedBlogs });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+}
+
+export const blogByUser = async (req, res) => {
+    try {
+        const { un } = req.params
+        if (!un) {
+            return res.status(400).json({ error: "Username parameter is required" });
+        }
+        const user = await UserModel.findOne({ username: un }).select("-password")
+        if (!user) {
+            return res.status(404).json({ error: "User not exist" });
+        }
+        const blogs = await BlogModel.find({ user: user._id })
+        
+        res.status(200).json({ user, blogs });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+
     }
 }

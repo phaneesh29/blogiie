@@ -116,7 +116,7 @@ const Home = () => {
                                 <img src={blog.image} className='rounded-xl w-[250px]  object-fill overflow-hidden' />
                                 <div className='flex flex-col justify-center items-start gap-2'>
                                 <Link to={`/blog/${blog._id}`} className='text-xl hover:underline font-semibold'>{blog.title}</Link>
-                                <h3 className='text-slate-400'>@{blog.user.username}</h3>
+                                <h3 className='text-slate-400'><Link to={`/user/@${blog.user.username}`}>@{blog.user.username}</Link></h3>
                                 <p className='text-gray-500'>{new Date(blog.createdAt).toDateString()}</p>
                                 </div>
 

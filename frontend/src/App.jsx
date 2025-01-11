@@ -13,6 +13,7 @@ import AddBlog from './pages/AddBlog';
 import ViewBlog from './pages/ViewBlog';
 import EditBlog from './pages/EditBlog';
 import SearchBlog from './pages/SearchBlog';
+import UserPage from './pages/UserPage';
 
 const App = () => {
   return (
@@ -32,7 +33,8 @@ const App = () => {
       <Route path='/blog/:blogId' element={<ViewBlog/>}/>
       <Route path='/edit' element={<EditBlog/>}/>
       <Route path='/search' element={<SearchBlog/>}/>
-
+      <Route path='/user/:un' element={<UserPage/>}/>
+    
 
       </Routes>
     </main>
