@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ql-container.ql-snow {
+    border: none !important;
+}
+
+.ql-container.ql-snow {
+    border: none !important;
+}
+
+.desc-box h1 {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.desc-box h2 {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.desc-box h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.desc-box h4 {
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.desc-box ul {
+    list-style: disc;
+}
+
+.desc-box ol {
+    list-style: lower-roman;
+}
+
+.desc-box pre {
+    background-color: rgb(61, 61, 61);
+    padding: 8px;
+    text-wrap-mode: wrap;
+}
+.desc-box a{
+    color: rgb(77, 77, 255);
+    text-decoration: underline;
+}
+
+.desc-box ul,
+ol {
+    margin-left: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+
+.desc-box ul ul,
+ul ol,
+ol ul,
+ol ol {
+    margin-left: 1.5rem;
+}
+
+.desc-box ul {
+    list-style-type: disc;
+}
+
+
+.desc-box ol {
+    list-style-type: decimal;
+    
+}
+
+.desc-box li {
+    margin-bottom: 0.5rem;
+}
