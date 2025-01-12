@@ -32,7 +32,7 @@ const UserPage = () => {
     if (loading) {
         return (
             <div className="h-screen flex justify-center items-center bg-gray-900">
-                <div className="w-24 h-24 rounded-full animate-spin border-4 border-t-4 border-emerald-500"></div>
+                <div className="w-24 h-24 rounded-full animate-spin border-e-4 border-t-4 border-emerald-500"></div>
             </div>
         );
     }
