@@ -85,7 +85,6 @@ const AddBlog = () => {
     }
 
     useEffect(() => {
-        console.log(user)
         if (!user) {
             navigate("/home")
             return

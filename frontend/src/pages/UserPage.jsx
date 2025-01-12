@@ -19,7 +19,6 @@ const UserPage = () => {
             setBlogData(response.data.blogs);
             setUserData(response.data.user);
         } catch (error) {
-            console.log(error);
             errorToast(error.response.data.error);
         } finally {
             setLoading(false);

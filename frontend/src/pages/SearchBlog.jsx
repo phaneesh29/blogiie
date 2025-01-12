@@ -28,7 +28,6 @@ const SearchBlog = () => {
         try {
             setLoading(true)
             const response = await axiosInstance.post("/blogs/search", { query: searchInput })
-            console.log(response)
             setSearchBlogs(response.data.searchedBlogs)
             setSearchQuery(response.data.query)
             setSearchInput("")

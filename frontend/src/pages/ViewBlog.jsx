@@ -65,11 +65,15 @@ const ViewBlog = () => {
 
     const handleKeyPress = (e) => {
         if (e.key === "Enter") {
-            handleSearch()
+            handleComment()
         }
     }
 
     const handleComment = async () => {
+        if (!commentInput) {
+            errorToast("Comment field empty")
+            return
+        }
         try {
             setCommentLoading(true)
             const response = await axiosInstance.post(`/comments/add`, { content: commentInput, blogId })
@@ -98,19 +102,19 @@ const ViewBlog = () => {
         }
     }
 
-    const handleCommentDelete = async(comment)=>{
-       if (user._id.toString() !== comment.user._id.toString()) {
-        errorToast("You can't delete")
-        return
-       }
+    const handleCommentDelete = async (comment) => {
+        if (user._id.toString() !== comment.user._id.toString()) {
+            errorToast("You can't delete")
+            return
+        }
         try {
             setCommentLoading(true)
-            const response = await axiosInstance.post(`/comments/delete`, { commentId:comment._id })
-            fetchComments()            
+            const response = await axiosInstance.post(`/comments/delete`, { commentId: comment._id })
+            fetchComments()
         } catch (error) {
             errorToast(error.response.data.error || "Something went wrong")
-            
-        }finally{
+
+        } finally {
             setCommentLoading(false)
 
         }
@@ -189,7 +193,7 @@ const ViewBlog = () => {
                                     <div className='flex items-center justify-between gap-3 text-gray-500'>
                                         <p><Link to={`/user/@${comment.user.username}`}>@{comment.user.username}</Link></p>
                                         <p>{new Date(comment.createdAt).toLocaleString()}</p>
-                                        {user?._id.toString() === comment.user._id.toString() && (<button className='text-red-700' onClick={(()=>handleCommentDelete(comment))}  ><MdDelete size={20} /></button>)}
+                                        {user?._id.toString() === comment.user._id.toString() && (<button className='text-red-700' onClick={(() => handleCommentDelete(comment))}  ><MdDelete size={20} /></button>)}
                                     </div>
                                     <p className='text-lg'>{comment.content}</p>
                                 </div>
