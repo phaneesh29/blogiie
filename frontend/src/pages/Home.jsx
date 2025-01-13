@@ -79,7 +79,7 @@ const Home = () => {
                 <div className='flex justify-center items-center gap-3'>
                     {user ? (
                         <div className='text-xl'>
-                            <Link to={"/add-blog"} state={user} className='p-2 border-2 border-gray-500 rounded-xl hover:bg-gray-600 transition-all flex justify-center items-center gap-1'>Create Project <MdAdd size={20} /></Link>
+                            <Link to={"/add-blog"} state={user} className='p-2 border-2 border-gray-500 rounded-xl hover:bg-gray-600 transition-all flex justify-center items-center gap-1'>Create Blog <MdAdd size={20} /></Link>
                         </div>
                     ) : (
                         <div className='flex justify-center items-center gap-4 text-xl'>

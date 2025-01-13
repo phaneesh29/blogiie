@@ -16,7 +16,7 @@ const LandingPage = () => {
       </header>
 
       {/* Navigation Buttons */}
-      <div className="mt-10 flex space-x-6 justify-center">
+      <div className="mt-10 flex space-x-6 justify-center flex-wrap">
         <a
           href="/home"
           className="flex items-center justify-center px-6 py-3 text-lg font-semibold bg-teal-500 hover:bg-teal-600 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
