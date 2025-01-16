@@ -15,9 +15,12 @@ import EditBlog from './pages/EditBlog';
 import SearchBlog from './pages/SearchBlog';
 import UserPage from './pages/UserPage';
 
+import { Analytics } from "@vercel/analytics/react"
+
 const App = () => {
   return (
     <>
+    <Analytics/>
     <Toaster />
     <main className=''>
       <Routes>
