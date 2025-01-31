@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-    baseURL: 'http://bloggie.bizwas.com/api', 
+    baseURL: 'https://bloggie.bizwas.com/api', 
 });
 
 // Add a request interceptor to attach the token
