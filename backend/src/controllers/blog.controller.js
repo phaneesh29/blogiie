@@ -35,7 +35,7 @@ export const addBlog = async (req, res) => {
 
 export const getAllBlog = async (req, res) => {
     try {
-        const allBlogs = await BlogModel.find({}).populate("user", "username email").exec()
+        const allBlogs = await BlogModel.find({}).select("-description -tags -comments").populate("user", "username email").exec()
         res.status(200).json({
             message: "Fetched all blogs",
             blogs: allBlogs,
