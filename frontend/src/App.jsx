@@ -16,6 +16,8 @@ import SearchBlog from './pages/SearchBlog';
 import UserPage from './pages/UserPage';
 
 import { Analytics } from "@vercel/analytics/react"
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 const App = () => {
   return (
@@ -37,8 +39,9 @@ const App = () => {
       <Route path='/edit' element={<EditBlog/>}/>
       <Route path='/search' element={<SearchBlog/>}/>
       <Route path='/user/:un' element={<UserPage/>}/>
+      <Route path='/privacy-policy' element={<PrivacyPolicy/>}/>
+      <Route path='/terms-of-service' element={<TermsOfService/>}/>
     
-
       </Routes>
     </main>
     </>

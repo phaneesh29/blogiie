@@ -1,5 +1,6 @@
 import React from "react";
 import { FaHome, FaUserPlus, FaSignInAlt, FaBullhorn, FaClipboardList } from "react-icons/fa";
+import Footer from "../components/Footer";
 
 const LandingPage = () => {
   return (
@@ -108,9 +109,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="mt-16 text-gray-500 text-sm text-center py-6 bg-gray-800">
-        &copy; 2025 Blog App. All rights reserved.
-      </footer>
+      <Footer/>
     </div>
   );
 };

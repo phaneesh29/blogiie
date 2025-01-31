@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axiosInstance from '../utils/axios'
 import { sucessToast, errorToast } from '../utils/noti'
+import { Link } from 'react-router-dom'
 
 
 const ForgotPassword = () => {
@@ -27,6 +28,7 @@ const ForgotPassword = () => {
                     <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder='Enter email' className='w-full rounded-full px-3 py-3 text-lg ring-2 ring-gray-500 bg-transparent focus:outline-none' />
                 </div>
                 <button onClick={handleClick} disabled={loading} type='sumbit' className={`bg-blue-600 p-3 rounded-full text-lg w-full hover:bg-blue-500 transition-all duration-300 ${loading ? "cursor-wait" : "cursor-pointer"}`}>{loading ? "Submiting" : "Submit"}</button>
+                <Link to={"/login"}>Login</Link>
 
             </div>
 

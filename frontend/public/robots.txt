@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /private/
+Allow: /public/
+Sitemap: https://bloggie.bizwas.com/sitemap.xml

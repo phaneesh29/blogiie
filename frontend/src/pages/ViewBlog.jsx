@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { sucessToast, errorToast } from '../utils/noti'
 import axiosInstance from '../utils/axios';
-import DescBlog from './DescBlog';
+import DescBlog from '../components/DescBlog';
 import { FaHome, FaPencilAlt } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { IoIosSend } from 'react-icons/io';
