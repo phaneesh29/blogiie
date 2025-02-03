@@ -11,7 +11,7 @@ const EditBlog = () => {
     const location = useLocation()
 
     const payload = location.state
-    
+
     const [image, setImage] = useState(payload?.blog?.image || '');
     const [title, setTitle] = useState(payload?.blog?.title || '');
     const [description, setDescription] = useState(payload?.blog?.description || '');
@@ -19,7 +19,7 @@ const EditBlog = () => {
     const [tagArray, setTagArray] = useState(payload?.blog?.tags || [])
 
     const [loading, setLoading] = useState(true)
-    
+
     useEffect(() => {
         if (!payload) {
             navigate("/home")
@@ -53,11 +53,11 @@ const EditBlog = () => {
     ];
 
     const handleAddTags = () => {
-        if (!tagInput) {
+        if (!tagInput.trim()) {
             errorToast("Tag fieled empty")
             return
         }
-        const addNewTags = tagInput.split(",")
+        const addNewTags = tagInput.split(",").map(tag => tag.trim())
         const existingTags = [...tagArray, ...addNewTags]
         setTagArray(existingTags)
         setTagInput("")
@@ -66,6 +66,24 @@ const EditBlog = () => {
         const existingTags = [...tagArray]
         existingTags.splice(index, 1)
         setTagArray(existingTags)
+    }
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => setImage(reader.result);
+        reader.onerror = (err) => errorToast("Image upload failed");
+    };
+
+    const resetForm = () => {
+        setImage("")
+        setTitle("")
+        setTagInput("")
+        setTagArray([])
+        setDescription("")
     }
 
     const handleEdit = async () => {
@@ -82,11 +100,7 @@ const EditBlog = () => {
             const response = await axiosInstance.post("/blogs/edit", { image, title, description, tags: tagArray, blogId: payload.blog._id })
             sucessToast(response.data.message)
 
-            setImage("")
-            setTitle("")
-            setTagInput("")
-            setTagArray([])
-            setDescription("")
+            resetForm()
             navigate("/home")
 
         } catch (error) {
@@ -96,6 +110,12 @@ const EditBlog = () => {
             setLoading(false)
         }
 
+    }
+
+    const handleTagEnterKey = (e) => {
+        if (e.key === "Enter") {
+            handleAddTags()
+        }
     }
 
     if (loading) {
@@ -109,20 +129,26 @@ const EditBlog = () => {
 
     return (
         <>
-            <Link to={"/home"} className='inline-block p-2'><MdClose size={29}/></Link>
-    
+            <Link to={"/home"} className='inline-block p-2'><MdClose size={29} /></Link>
+
             <div className='p-3 flex justify-between items-center mb-10'>
                 <div className='text-2xl font-semibold'>Edit Blog</div>
                 <div className=' text-xl'>Hello, <span className='font-bold'>{payload.user.username}</span></div>
             </div>
             <div>
                 <div className='m-4 flex flex-col justify-center items-center gap-5'>
-                    <input value={image} onChange={(e) => { setImage(e.target.value) }} type="text" className='w-full p-2 bg-gray-900 text-white bg-opacity-55 ring-2 ring-gray-500 rounded-lg text-xl focus:outline-none' placeholder='Image Url' />
+
+                    <label className="w-full min-h-[70px] gap-20 flex relative items-center justify-center p-4 bg-gray-800 text-white bg-opacity-55 ring-2 ring-gray-500 rounded-lg text-xl cursor-pointer hover:bg-gray-700 transition">
+                        {image && <img src={image} />}
+                        {!image && <span>Upload image</span>}
+                        <input onChange={handleImageUpload} type="file" accept="image/*" className="hidden" />
+                        {image && <span className="absolute left-3 bg-gray-800 p-2 rounded-lg top-3 text-red-600" onClick={(e) => { e.stopPropagation(); setImage(null) }}><MdDelete /></span>}
+                    </label>
 
                     <input value={title} onChange={(e) => { setTitle(e.target.value) }} type="text" className='w-full p-2 bg-gray-900 text-white bg-opacity-55 ring-2 ring-gray-500 rounded-lg text-xl focus:outline-none' placeholder='Title' />
 
                     <div className='w-full flex justify-between items-center gap-2'>
-                        <input value={tagInput} onChange={(e) => { setTagInput(e.target.value) }} type="text" className='w-[85%] p-2 bg-gray-900 text-white bg-opacity-55 ring-2 ring-gray-500 rounded-lg text-xl focus:outline-none' placeholder='Seprate tags with comma' />
+                        <input value={tagInput} onChange={(e) => { setTagInput(e.target.value) }} onKeyDown={handleTagEnterKey} type="text" className='w-[85%] p-2 bg-gray-900 text-white bg-opacity-55 ring-2 ring-gray-500 rounded-lg text-xl focus:outline-none' placeholder='Seprate tags with comma' />
                         <button onClick={handleAddTags} className='w-[15%] bg-emerald-500 text-black p-1 rounded-lg text-lg font-semibold'>Add Tags</button>
                     </div>
                     <div className='w-full px-2 mb-4 flex-wrap text-lg flex items-center gap-5'>All tags : {tagArray.length > 0 && (
