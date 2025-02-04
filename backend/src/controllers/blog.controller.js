@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator";
 import BlogModel from "../models/blog.model.js";
 import { UserModel } from "../models/user.model.js";
+import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const addBlog = async (req, res) => {
     try {
@@ -16,10 +17,15 @@ export const addBlog = async (req, res) => {
             return res.status(400).json({ error: "Title and Description is required" });
         }
 
+        let blogImage;
+        if (image?.includes("data:")) {
+            blogImage = await uploadOnCloudinary(image)
+        }
+
         const newBlog = await BlogModel.create({
             title,
             description,
-            image: image || "https://picsum.photos/300/200",
+            image: blogImage?.url || "https://picsum.photos/300/200",
             tags: tags || [],
             user: userId
         })
@@ -91,10 +97,15 @@ export const editBlog = async (req, res) => {
             return res.status(400).json({ error: "You can't edit this blog" });
         }
 
+        let blogImage;
+        if (image?.includes("data:")) {
+            blogImage = await uploadOnCloudinary(image)
+        }
+
         const updatedBlog = await BlogModel.findOneAndUpdate({ _id: blogId, user: user._id }, {
             title,
             description,
-            image: image || "https://picsum.photos/300/200",
+            image: blogImage?.url || image ||  "https://picsum.photos/300/200",
             tags: tags || []
         }, { new: true })
 
@@ -121,6 +132,9 @@ export const deleteBlog = async (req, res) => {
         if (existingBlog.user.toString() !== user._id.toString()) {
             return res.status(403).json({ error: "You can't delete this blog" });
         }
+
+        await deleteFromCloudinary(existingBlog.image)
+
         const deletedBlog = await BlogModel.findOneAndDelete({ _id: blogId, user: user._id })
 
         res.status(200).json({
@@ -166,7 +180,7 @@ export const blogByUser = async (req, res) => {
             return res.status(404).json({ error: "User not exist" });
         }
         const blogs = await BlogModel.find({ user: user._id })
-        
+
         res.status(200).json({ user, blogs });
 
     } catch (error) {
